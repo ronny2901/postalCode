@@ -1,0 +1,10 @@
+{
+  "request": {
+    "url": "/cepwiremock",
+    "method": "GET"
+  },
+  "response": {
+    "status": 200,
+    "body": "deu bom"
+  }
+}

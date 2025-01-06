@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPattern": "/postalcode*"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type" : "appication/json"
+    },
+    "jsonBody": {
+      "cep": "01001-000",
+      "logradouro": "Praça da Sé",
+      "bairro": "Sé",
+      "localidade": "São Paulo",
+      "uf": "SP"
+    }
+  }
+}

@@ -15,10 +15,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(PostalCodeController.RESOURCE_PATH_POSTAL_CODE)
+@RequestMapping("/api/v1/postalcode")
 public class PostalCodeController {
-
-    public static final String RESOURCE_PATH_POSTAL_CODE = "/postalcode";
 
     private final PostalCodeService service;
 

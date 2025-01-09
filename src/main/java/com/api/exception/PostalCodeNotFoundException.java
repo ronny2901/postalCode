@@ -1,4 +1,4 @@
-package com.exception;
+package com.api.exception;
 
 public class PostalCodeNotFoundException extends RuntimeException {
 

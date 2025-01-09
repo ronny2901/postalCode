@@ -1,12 +1,13 @@
-package com.persistence.service.impl;
+package com.application.service;
 
-import com.api.dto.PostalCode;
+import com.api.dto.response.PostalCodeResponse;
 import com.config.mapper.PostalCodeMapper;
-import com.exception.PostalCodeNotFoundException;
-import com.exception.PostalCodeServiceException;
-import com.persistence.entity.PostalCodeEntity;
-import com.persistence.repository.PostalCodeRepository;
-import com.persistence.service.PostalCodeService;
+import com.api.exception.PostalCodeNotFoundException;
+import com.api.exception.PostalCodeServiceException;
+import com.infrastructure.external.PostalCodeApiClient;
+import com.infrastructure.persistence.entity.PostalCodeEntity;
+import com.infrastructure.persistence.repository.PostalCodeRepository;
+import com.application.port.PostalCodeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,20 +28,20 @@ public class PostalCodeServiceImpl implements PostalCodeService {
     private final PostalCodeRepository repository;
     private final RestTemplate restTemplate;
     private final PostalCodeMapper mapper;
+    private final PostalCodeApiClient client;
 
     @Value("${zipcode.url}")
     private String zipcodeApiUrl;
 
     @Override
-    public PostalCode get(String zipCode) {
+    public PostalCodeResponse get(String zipCode) {
         if (!isValidZipCode(zipCode)) {
             log.warn("Zipcode not valid: {}", zipCode);
             throw new IllegalArgumentException("Zipcode not valid: " + zipCode);
         }
 
         try {
-            // Faz a chamada para a API WireMock
-            var response = restTemplate.getForObject(zipcodeApiUrl + "/" + zipCode, PostalCode.class);
+            var response = client.fetchPostalCode(zipCode);
 
             if (response == null) {
                 log.error("ZipCode not found: {}", zipCode);
@@ -51,11 +52,9 @@ public class PostalCodeServiceImpl implements PostalCodeService {
             return mapper.postalCodeEntityToPostalCode(entity);
 
         } catch (HttpClientErrorException.NotFound e) {
-            // Aqui tratamos o erro 404 especificamente e retornamos um erro adequado
             log.error("Error 404 - ZipCode not found: {}", zipCode);
             throw new PostalCodeNotFoundException("ZipCode not found: " + zipCode);
         } catch (RestClientException e) {
-            // Aqui você pode tratar outros tipos de erros HTTP
             log.error("Error occurred while fetching data for zipCode {}: {}", zipCode, e.getMessage());
             throw new PostalCodeServiceException("Failed to fetch PostalCode", e);
         }
@@ -63,7 +62,7 @@ public class PostalCodeServiceImpl implements PostalCodeService {
 
 
     @Override
-    public List<PostalCode> getLogs() {
+    public List<PostalCodeResponse> getLogs() {
 
         List<PostalCodeEntity> response = StreamSupport.stream(repository.findAll().spliterator(), false)
                 .collect(Collectors.toList());

@@ -1,4 +1,4 @@
-package com.persistence.entity;
+package com.infrastructure.persistence.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

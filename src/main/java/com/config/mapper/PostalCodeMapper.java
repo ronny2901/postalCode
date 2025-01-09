@@ -1,13 +1,13 @@
 package com.config.mapper;
 
-import com.api.dto.PostalCode;
-import com.persistence.entity.PostalCodeEntity;
+import com.api.dto.response.PostalCodeResponse;
+import com.infrastructure.persistence.entity.PostalCodeEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface PostalCodeMapper {
 
-    PostalCodeEntity postalCodeToPostalCodeEntity(PostalCode dto);
+    PostalCodeEntity postalCodeToPostalCodeEntity(PostalCodeResponse dto);
 
-    PostalCode postalCodeEntityToPostalCode(PostalCodeEntity entity);
+    PostalCodeResponse postalCodeEntityToPostalCode(PostalCodeEntity entity);
 }

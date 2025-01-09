@@ -1,8 +1,8 @@
 package com.api.controller;
 
 
-import com.api.dto.PostalCode;
-import com.persistence.service.PostalCodeService;
+import com.api.dto.response.PostalCodeResponse;
+import com.application.port.PostalCodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +23,13 @@ public class PostalCodeController {
     private final PostalCodeService service;
 
     @GetMapping(path = "/{zipCode}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PostalCode> getPostalCode(@PathVariable final String zipCode) {
+    public ResponseEntity<PostalCodeResponse> getPostalCode(@PathVariable final String zipCode) {
 
         return ResponseEntity.ok().body(service.get(zipCode));
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<PostalCode>> getAllPostalCodeLogs() {
+    public ResponseEntity<List<PostalCodeResponse>> getAllPostalCodeLogs() {
 
         return ResponseEntity.ok().body(service.getLogs());
     }

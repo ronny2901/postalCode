@@ -1,4 +1,4 @@
-package com.api.dto;
+package com.api.dto.response;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostalCode {
+public class PostalCodeResponse {
 
     private String zipCode;
     private String street;

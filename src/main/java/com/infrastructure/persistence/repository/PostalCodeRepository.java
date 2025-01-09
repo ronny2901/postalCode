@@ -1,7 +1,7 @@
-package com.persistence.repository;
+package com.infrastructure.persistence.repository;
 
 
-import com.persistence.entity.PostalCodeEntity;
+import com.infrastructure.persistence.entity.PostalCodeEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
